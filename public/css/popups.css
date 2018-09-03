@@ -1,0 +1,150 @@
+.errorcontainer{
+    position: fixed;
+    top: 50px;
+    left: 10px;
+    animation-name: fade-out;
+    animation-duration: 1s;
+    animation-delay: 5s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+}
+
+.error{
+    float: left;
+    background: #FF0000;
+    border: 2px solid #AAAAAA;
+    font-weight: bold;
+    text-align: center;
+    color: #FFF;
+    text-shadow: 0px -1px 0px #AA0000;
+    padding: 10px 30px;
+    width: 300px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.popup{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #FFF;
+    border: 1px solid #DDD;
+    border-radius: 4px;
+    box-shadow: 0px 0px 30px #AAA;
+}
+
+.modal{
+    content: "";
+    background: rgba(50, 50, 50, 0.1);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top:0;
+    left:0;
+    z-index: 1000;
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.content{
+    margin: 40px;
+}
+
+div.input{
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 90%;
+    min-width: 250px;
+    position: relative;
+    overflow: hidden;
+}
+
+div.input > span{
+    position: absolute;
+    left: 20px;
+    top: 27px;
+    z-index: 10;
+    font-size: 12px;
+    color: #777777;
+    transition: 0.2s all;
+}
+
+div.input input,
+div.input textarea,
+div.input select{
+    margin-top: 20px;
+    z-index: 5;
+    width: calc(100% - 20px);
+    min-width: 0;
+}
+
+div.input.filled span,
+div.input.noValue span{
+    top: 0;
+    left: 0;
+    color: #009688;
+}
+
+div.input.filled span:after,
+div.input.noValue span:after{
+    content: ':';
+}
+
+div.input input[type=checkbox]{
+    width: auto;
+    min-width: 0;
+}
+
+div.input input[type=file]{
+    width: 0.1px;
+    height: 0.1px;
+    overflow: hidden;
+    opacity: 0;
+    z-index: -1;
+    position: absolute;
+}
+
+div.input label{
+    width: auto;
+    padding: 5px;
+    margin: 0px 10px 5px 10px;
+    font-size: 13px;
+    overflow: hidden;
+    display: inline-block;
+    border: 1px solid #CCC;
+}
+
+div.input label,
+input[type=submit]{
+    width: auto;
+    min-width: 0px;
+    background: #009688;
+    color: #FFF;
+}
+
+div.input label:hover,
+input[type=submit]:hover {
+    background: #007668;
+    cursor: pointer;
+}
+
+
+@keyframes fade-out {
+
+    0%{
+        z-index: 1000;
+        opacity: 1;
+    }
+
+    99%{
+        z-index: 1000;
+        opacity: 0;
+    }
+
+    100%{
+        z-index: -1000;
+        opacity: 0;
+    }
+
+}

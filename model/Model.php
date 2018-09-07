@@ -57,6 +57,12 @@ abstract class Model
      */
     protected $modified;
 
+
+    public function __get($name) {
+        return @$this->{$name};
+    }
+
+
     public function save(){
         if($this->id){
             $this->update();

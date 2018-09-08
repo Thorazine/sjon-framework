@@ -12,16 +12,12 @@ if (isset($_POST['email'])) {
 }
 ?>
 <div class="container">
-
-    <div class="blockContainer">
-
-        <div class="block w4">
-            <h1>
-                LOGIN
-            </h1>
-
+    <div class="card">
+        <div class="card-header">
+            Login
+        </div>
+        <div class="card-body">
             <?= User::loginForm(); ?>
-
         </div>
     </div>
 </div>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 //Include models
 spl_autoload_register(function ($class_name) {
     if(file_exists('../model/' . $class_name . '.php')) {
@@ -17,6 +18,19 @@ if(isset($_GET['page'])) {
         App::redirect('home');
     }
 }
-else{
+else {
     App::redirect('home');
+}
+
+// load all the base functions
+function dd($text)
+{
+    if(is_array($text) || is_object($text)) {
+        var_dump($text);
+        die();
+    }
+    else {
+        echo $text;
+        die();
+    }
 }

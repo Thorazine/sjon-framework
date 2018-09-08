@@ -1,21 +1,21 @@
 <?php
 //Create your menu here
 ?>
-<nav>
-    <div>
+
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Company name</h5>
+    <nav class="my-2 my-md-0 mr-md-3">
         <?php if(App::checkAuth(App::ROLE_USER)){ ?>
-            <ul class="left">
-                <li><a <?= App::link('home') ?>>    home      </a></li>
-            </ul>
+            <a class="p-2 text-dark" <?= App::link('home') ?>>Home</a>
         <?php } ?>
 
-        <ul class="right">
-            <?php if(App::checkAuth(App::ROLE_GUEST)){?>
-                <li><a <?= App::link('login') ?>>   login     </a></li>
-                <li><a <?= App::link('register') ?>>register     </a></li>
-            <?php } else { ?>
-                <li><a <?= App::link('logout') ?>>  logout    </a></li>
-            <?php } ?>
-        </ul>
-    </div>
-</nav>
+        <?php if(App::checkAuth(App::ROLE_GUEST)){?>
+            <a class="p-2 text-dark" <?= App::link('login') ?>>Login</a>
+            <a class="p-2 text-dark" <?= App::link('register') ?>>Register</a>
+        <?php } else { ?>
+            <a class="p-2 text-dark" <?= App::link('logout') ?>>Logout</a>
+        <?php } ?>
+    </nav>
+    <!-- <a class="btn btn-outline-primary" href="#">Sign up</a> -->
+</div>

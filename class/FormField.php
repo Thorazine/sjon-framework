@@ -69,10 +69,12 @@ class FormField
         switch($this->type) {
             case "select":
             case "textarea":
-                $html .= $this->type . " ";
+                $html .= $this->type . ' class="form-control" ';
                 break;
+            case "file":
+                $html .= 'input class="custom-file-input" type="file" aria-describedby="inputGroupFileAddon'.$this->name.'"';
             default:
-                $html .= "input type='$this->type' ";
+                $html .= 'input class="form-control" type="'.$this->type.'"';
                 break;
         }
 
@@ -114,21 +116,36 @@ class FormField
             $html .= "<br>";
         }
 
-        if($this->type == "file") {
-            $html .= "<label for='$this->name'>choose...</label>";
-        }
+        // if($this->type == "file") {
+        //     $html .= '<';
+        // }
         return $html;
     }
 
     public function getHtml($first)
     {
-        $html  = "<div class='input" . ($this->type == "file" ? " noValue" : "") . "'>";
+        if($this->type != 'file') {
+            $html = '<div class="form-group">
+                        <label for="'.$this->name.'">'.$this->placeholder.'</label>
+                        '.$this->getInput($first).'
+                    </div>';
+        }
+        else {
+            $html = '<div class="form-group">
+                <div class="custom-file">
+                    '.$this->getInput($first).'
+                    <label class="custom-file-label" for="inputGroupFileAddon'.$this->name.'">Choose file</label>
+                </div>
+            </div>';
+        }
 
-        $html .= "<span>$this->placeholder</span>";
+        // $html  = "<div class='input filled" . ($this->type == "file" ? " noValue" : "") . "'>";
 
-        $html .= $this->getInput($first);
+        // $html .= "<span>$this->placeholder</span>";
 
-        $html .= "</div>";
+        // $html .= $this->getInput($first);
+
+        // $html .= "</div>";
 
         return $html;
     }

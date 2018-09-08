@@ -11,17 +11,14 @@ if (isset($_POST['email'])) {
     }
 }
 ?>
+
 <div class="container">
-
-    <div class="blockContainer">
-
-        <div class="block w4">
-            <h1>
-                Register
-            </h1>
-
+    <div class="card">
+        <div class="card-header">
+            Register
+        </div>
+        <div class="card-body">
             <?= User::registerForm(); ?>
-
         </div>
     </div>
 </div>

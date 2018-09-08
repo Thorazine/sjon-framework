@@ -3,6 +3,8 @@
 class User extends Model
 {
 
+    protected $table = 'users';
+
     /**
      * @Type varchar(255)
      */
@@ -12,11 +14,6 @@ class User extends Model
      * @Type varchar(255)
      */
     protected $password;
-
-    /**
-     * @Type varchar(255)
-     */
-    protected $salt;
 
     /**
      * @Type varchar(40)
@@ -33,12 +30,19 @@ class User extends Model
      */
     protected $lastname;
 
+    /**
+     * @@Type boolean
+     */
+    protected $active = true;
 
-    private function __construct(){
+
+    public function __construct()
+    {
 
     }
 
-    public function getFullName(){
+    public function getFullName()
+    {
         return $this->firstname . " " . $this->lastname;
     }
 
@@ -74,16 +78,14 @@ class User extends Model
 
     private function setPassword($password)
     {
-        $this->salt = self::generateSalt();
-        $this->password = hash('sha256', $password . $this->salt);
+        $this->password = password_hash($password, PASSWORD_BCRYPT);
     }
 
 
 
     private function checkPassword($password)
     {
-        $hash = hash('sha256', $password . $this->salt);
-        return ($hash == $this->password);
+        return password_verify($password, $this->password);
     }
 
     public static function generateSalt()
@@ -91,7 +93,8 @@ class User extends Model
         return uniqid();
     }
 
-    protected static function newModel($obj){
+    protected static function newModel($obj)
+    {
 
         $email = $obj->email;
 
@@ -103,7 +106,8 @@ class User extends Model
 
     }
 
-    public static function register($form){
+    public static function register($form)
+    {
         if($form['password'] !== $form['repeat']) App::addError("passwords do not match");
         if(strlen($form['password']) < 8) App::addError("password is too short");
 
@@ -138,7 +142,8 @@ class User extends Model
         return false;
     }
 
-    public static function loginForm(){
+    public static function loginForm()
+    {
         $form = new Form();
 
         $form->addField((new FormField("email"))
@@ -151,10 +156,16 @@ class User extends Model
             ->placeholder("password")
             ->required());
 
+        $form->addField((new FormField("image"))
+            ->type("file")
+            ->placeholder("Image")
+            ->required());
+
         return $form->getHTML();
     }
 
-    public static function registerForm(){
+    public static function registerForm()
+    {
         $form = new Form();
 
         $form->addField((new FormField("email"))

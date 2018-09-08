@@ -8,8 +8,8 @@ class DB
     //login credentials:
     private $servername = "localhost";
     private $username = "root";
-    private $password = "";
-    private $database = "";
+    private $password = "root";
+    private $database = "sjonframework";
 
     private $existingTables = [];
 
@@ -27,41 +27,54 @@ class DB
         }
     }
 
-    public static function getInstance(){
+
+    public static function getInstance()
+    {
 
         if(self::$instance == null){
             self::$instance = new DB();
         }
         return self::$instance;
-
     }
 
-    public function select($query){
+
+    public function select($query)
+    {
         $result = $this->c->query($query);
         return $result;
     }
 
-    public static function prepare($query){
+
+    public static function prepare($query)
+    {
         App::log("preparing: " . $query);
         return self::getInstance()->c->prepare($query);
     }
 
-    public static function lastId(){
+
+    public static function lastId()
+    {
         return self::getInstance()->c->lastInsertId();
     }
 
-    public static function create($class, $fields, $values){
+
+    public static function create($class, $fields, $values)
+    {
         if(count($fields) != count($values)){
             throw new Exception("Fields and Values don't have the same size");
         }
     }
 
-    public static function close(){
+
+    public static function close()
+    {
         self::getInstance()->c = null;
         self::$instance = null;
     }
 
-    public static function tableExists($name){
+
+    public static function tableExists($name)
+    {
         $table = strtolower($name);
         if(array_search($table, self::getInstance()->existingTables) !== false){
             return true;
@@ -79,14 +92,17 @@ class DB
     }
 
 
-    public static function getBy($class, $field, $value, $orderBy = "", $order = 1){
+    public static function getBy(string $className, $field, $value, $orderBy = "", $order = 1)
+    {
         $c = self::getInstance()->c;
 
-        $stmt = $c->prepare("SELECT * FROM `" . strtolower($class) . "` WHERE `active` = 1 AND (`$field` = :$field)" . ($orderBy == "" ? "" : " ORDER BY `$orderBy` " . ($order == 1 ? "ASC" : "DESC")));
+        $class = new $className;
+
+        $stmt = $c->prepare("SELECT * FROM `" . $class->table . "` WHERE `active` = 1 AND (`$field` = :$field)" . ($orderBy == "" ? "" : " ORDER BY `$orderBy` " . ($order == 1 ? "ASC" : "DESC")));
 
         $stmt->execute(array("$field" => $value));
 
-        $result = $stmt->fetchAll(PDO::FETCH_CLASS, $class);
+        $result = $stmt->fetchAll(PDO::FETCH_CLASS, $className);
         return $result;
     }
 }

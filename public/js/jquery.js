@@ -11,7 +11,7 @@ $(function () {
         $(this).addClass("active");
     });
 
-    formInputs();
+    // formInputs();
 
 });
 

@@ -17,19 +17,24 @@ class App
 
     const DEBUGGING = true;
 
-    public static function addError($error){
+    public static function addError($error)
+    {
         self::initErrors();
         array_push($_SESSION['errors'], self::calledBy() . "|". $error);
     }
 
-    public static function getErrors(){
+
+    public static function getErrors()
+    {
         self::initErrors();
         $errors = $_SESSION['errors'];
         $_SESSION['errors'] = [];
         return $errors;
     }
 
-    public static function hasErrors($class = ""){
+
+    public static function hasErrors($class = "")
+    {
         self::initErrors();
         if($class == ""){
             return count($_SESSION['errors']) > 0;
@@ -44,7 +49,9 @@ class App
         return false;
     }
 
-    public static function displayErrors(){
+
+    public static function displayErrors()
+    {
         self::initErrors();
         if(!self::hasErrors()){
             return false;
@@ -55,6 +62,7 @@ class App
         }
         echo $html;
     }
+
 
     public static function calledBy()
     {
@@ -67,29 +75,42 @@ class App
         }
     }
 
-    private static function initErrors(){
+
+    private static function initErrors()
+    {
         if(!isset($_SESSION['errors'])){
             $_SESSION['errors'] = [];
         }
     }
 
-    public static function log($message){
+
+    public static function log($message)
+    {
 
     }
 
-    public static function setLoggedInUser($user){
+
+    public static function setLoggedInUser($user)
+    {
         self::$user = $user;
         $_SESSION['id'] = $user->getId();
     }
 
-    public static function logoutUser(){
+
+    public static function logoutUser()
+    {
         self::$user = null;
+
         unset($_SESSION['id']);
+
         session_destroy();
+
         self::redirect('login');
     }
 
-    public static function getUser(){
+
+    public static function getUser()
+    {
         if(!isset($_SESSION['id'])) return false;
         if(!isset(self::$user)){
             self::$user = User::findById($_SESSION['id']);
@@ -97,7 +118,9 @@ class App
         return self::$user;
     }
 
-    public static function checkAuth($role, $user = null){
+
+    public static function checkAuth($role, $user = null)
+    {
         if ($user == null){
             $user = self::getUser();
         }
@@ -108,7 +131,9 @@ class App
         return $role == self::ROLE_GUEST;
     }
 
-    public static function pageAuth($roles, $redirect = "home"){
+
+    public static function pageAuth($roles, $redirect = "home")
+    {
         foreach($roles as $role){
             if(self::checkAuth($role)){
                 return true;
@@ -117,22 +142,29 @@ class App
         self::redirect($redirect);
     }
 
-    public static function currentPage(){
+
+    public static function currentPage()
+    {
         $actualLink = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         return explode("page=", $actualLink)[1];
     }
 
-    public static function redirect($page){
+
+    public static function redirect($page)
+    {
         header("location: ?page=$page");
         exit();
     }
+
 
     public static function refresh(){
         header("location: ?page=" . self::currentPage());
         exit();
     }
 
-    public static function link($page, $params = []){
+
+    public static function link($page, $params = [])
+    {
         $url = ' href="?page=' . $page;
 
         foreach ($params as $param => $value){
@@ -144,7 +176,9 @@ class App
         return $url;
     }
 
-    public static function textInput($title, $form){
+
+    public static function textInput($title, $form)
+    {
         $popup = "<div class='modal' onclick='this.remove();'>";
         $popup .=   "<div class='popup' onclick='event.stopPropagation()'>";
         $popup .=       "<h1>$title</h1>";
@@ -160,11 +194,15 @@ class App
         return $popup;
     }
 
-    public static function addTextInput($title, $form){
+
+    public static function addTextInput($title, $form)
+    {
         return "$('body').append('" . str_replace("'", "\\'", App::textInput($title, $form)) . "');formInputsInit()";
     }
 
-    public static function camelToNormal($string){
+
+    public static function camelToNormal($string)
+    {
         $newStr = "";
         foreach (str_split($string) as $char){
             $newStr .= (strtolower($char) == $char ? $char : " " . strtolower($char));

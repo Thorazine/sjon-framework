@@ -126,7 +126,7 @@ class App
         }
 
         if($user){
-           return  strpos($user->getRole(), $role) !== false;
+           return  strpos($user->role, $role) !== false;
         }
         return $role == self::ROLE_GUEST;
     }

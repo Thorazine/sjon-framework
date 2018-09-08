@@ -31,6 +31,11 @@ class User extends Model
     protected $lastname;
 
     /**
+     * @Type varchar(255)
+     */
+    protected $image;
+
+    /**
      * @@Type boolean
      */
     protected $active = true;
@@ -41,38 +46,10 @@ class User extends Model
 
     }
 
+
     public function getFullName()
     {
         return $this->firstname . " " . $this->lastname;
-    }
-
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFirstname()
-    {
-        return $this->firstname;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLastname()
-    {
-        return $this->lastname;
     }
 
 
@@ -82,16 +59,17 @@ class User extends Model
     }
 
 
-
     private function checkPassword($password)
     {
         return password_verify($password, $this->password);
     }
 
+
     public static function generateSalt()
     {
         return uniqid();
     }
+
 
     protected static function newModel($obj)
     {
@@ -105,6 +83,7 @@ class User extends Model
         return true;
 
     }
+
 
     public static function register($form)
     {
@@ -126,6 +105,7 @@ class User extends Model
         }
     }
 
+
     public static function login($form)
     {
         $email = $form['email'];
@@ -142,27 +122,54 @@ class User extends Model
         return false;
     }
 
+
+    public static function updateUser($form)
+    {
+        $user = self::findById(App::$user->id);
+        $user->firstname = $form['firstname'];
+        $user->lastname = $form['lastname'];
+
+        if ( !!$_FILES['image']['tmp_name']) {
+            $fileParts = pathinfo($_FILES['image']['name']);
+
+            if($user->image) {
+                @unlink(Http::$dirroot.'public/images/'.$user->image);
+            }
+
+            $user->image = sha1($fileParts['filename'].microtime()).'.'.$fileParts['extension'];
+
+            if(in_array($fileParts['extension'], ['jpg', 'jpeg', 'png'])) {
+                if(move_uploaded_file($_FILES['image']['tmp_name'], Http::$dirroot.'public/images/'.$user->image)) {
+                    // the file has been moved correctly
+
+                }
+            }
+            else {
+                // error this file ext is not allowed
+            }
+        }
+
+        $user->save();
+    }
+
+
     public static function loginForm()
     {
         $form = new Form();
 
         $form->addField((new FormField("email"))
             ->type("email")
-            ->placeholder("email")
+            ->placeholder("E-mail")
             ->required());
 
         $form->addField((new FormField("password"))
             ->type("password")
-            ->placeholder("password")
-            ->required());
-
-        $form->addField((new FormField("image"))
-            ->type("file")
-            ->placeholder("Image")
+            ->placeholder("Password")
             ->required());
 
         return $form->getHTML();
     }
+
 
     public static function registerForm()
     {
@@ -170,25 +177,56 @@ class User extends Model
 
         $form->addField((new FormField("email"))
             ->type("email")
-            ->placeholder("email")
+            ->placeholder("E-mail")
             ->required());
 
         $form->addField((new FormField("password"))
             ->type("password")
-            ->placeholder("password")
+            ->placeholder("Password")
             ->required());
 
         $form->addField((new FormField("repeat"))
             ->type("password")
-            ->placeholder("repeat")
+            ->placeholder("Password repeat")
             ->required());
 
         $form->addField((new FormField("firstname"))
-            ->placeholder("first name")
+            ->placeholder("First name")
             ->required());
 
         $form->addField((new FormField("lastname"))
-            ->placeholder("last name")
+            ->placeholder("Last name")
+            ->required());
+
+        return $form->getHTML();
+    }
+
+
+    public static function editUserForm()
+    {
+        $user = User::findById(App::$user->id);
+
+        $form = new Form();
+
+        $form->addField((new FormField("email"))
+            ->type("email")
+            ->placeholder("E-mail")
+            ->value($user->email)
+            ->required());
+
+        $form->addField((new FormField("image"))
+            ->type("file")
+            ->placeholder("Image")
+            ->value($user->image));
+
+        $form->addField((new FormField("firstname"))
+            ->placeholder("First name")
+            ->value($user->firstname)
+            ->required());
+
+        $form->addField((new FormField("lastname"))
+            ->placeholder("Last name")
+            ->value($user->lastname)
             ->required());
 
         return $form->getHTML();

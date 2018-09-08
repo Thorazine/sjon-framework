@@ -22,6 +22,7 @@ class FormField
         $this->value = $value;
     }
 
+
     public function name($name)
     {
         $this->name = $name;
@@ -34,6 +35,7 @@ class FormField
         $this->type = $type;
         return $this;
     }
+
 
     public function placeholder($placeholder)
     {
@@ -48,11 +50,13 @@ class FormField
         return $this;
     }
 
+
     public function required()
     {
         $this->required = true;
         return $this;
     }
+
 
     /**
      * @return string
@@ -61,6 +65,7 @@ class FormField
     {
         return $this->type;
     }
+
 
     public function getInput($first)
     {
@@ -72,7 +77,7 @@ class FormField
                 $html .= $this->type . ' class="form-control" ';
                 break;
             case "file":
-                $html .= 'input class="custom-file-input" type="file" aria-describedby="inputGroupFileAddon'.$this->name.'"';
+                $html .= 'input class="form-control-file" type="file"';
             default:
                 $html .= 'input class="form-control" type="'.$this->type.'"';
                 break;
@@ -112,8 +117,9 @@ class FormField
         }
 
         $html .= ">";
-        if($this->type != "hidden") {
-            $html .= "<br>";
+
+        if($this->type == 'file' && $this->value) {
+            $html .= '<img width="200" style="margin-top:10px;" src="'.Http::$webroot.'images/'.$this->value.'">';
         }
 
         // if($this->type == "file") {
@@ -121,6 +127,7 @@ class FormField
         // }
         return $html;
     }
+
 
     public function getHtml($first)
     {
@@ -132,10 +139,8 @@ class FormField
         }
         else {
             $html = '<div class="form-group">
-                <div class="custom-file">
-                    '.$this->getInput($first).'
-                    <label class="custom-file-label" for="inputGroupFileAddon'.$this->name.'">Choose file</label>
-                </div>
+                <label for="'.$this->name.'">'.$this->placeholder.'</label>
+                '.$this->getInput($first).'
             </div>';
         }
 

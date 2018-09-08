@@ -11,6 +11,8 @@ spl_autoload_register(function ($class_name) {
     }
 });
 
+Http::boot();
+
 
 if(isset($_GET['page'])) {
     $page = $_GET['page'];

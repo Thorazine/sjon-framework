@@ -1,23 +1,19 @@
 <?php
 
-App::pageAuth([App::ROLE_GUEST]);
+App::pageAuth(['user'], "login");
 
 if (isset($_POST['email'])) {
-
-    $user = User::login($_POST);
-
-    if ($user) {
-        App::redirect('home');
-    }
+    User::updateUser($_POST);
 }
 ?>
+
 <div class="container">
     <div class="card card-model card-model-sm">
         <div class="card-header">
-            Login
+            Update
         </div>
         <div class="card-body">
-            <?= User::loginForm(); ?>
+            <?= User::editUserForm(); ?>
         </div>
     </div>
 </div>

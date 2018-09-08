@@ -19,14 +19,18 @@ class Form
         $this->method = $method;
     }
 
-    public function addField($field){
+
+    public function addField($field)
+    {
         if($field->getType() === "file"){
             $this->hasFileUpload = true;
         }
         array_push($this->fields, $field);
     }
 
-    public function getHTML(){
+
+    public function getHTML()
+    {
         $html = "<form method='$this->method'";
 
         if($this->action) {

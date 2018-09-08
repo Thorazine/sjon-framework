@@ -13,7 +13,7 @@ if (isset($_POST['email'])) {
 ?>
 
 <div class="container">
-    <div class="card">
+    <div class="card card-model card-model-sm">
         <div class="card-header">
             Register
         </div>

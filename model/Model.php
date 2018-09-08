@@ -62,6 +62,7 @@ abstract class Model
     public function save()
     {
         if($this->id) {
+
             $this->update();
         }
         else{
@@ -146,9 +147,15 @@ abstract class Model
     }
 
 
-    private function update()
+    private function update($exclude = [])
     {
+        array_push($exclude, 'table');
+
         $vars = get_object_vars($this);
+
+        foreach($exclude as $key) {
+            unset($vars[$key]);
+        }
 
         $table = self::table();
 

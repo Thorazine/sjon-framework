@@ -3,11 +3,14 @@ session_start();
 
 //Include models
 spl_autoload_register(function ($class_name) {
-    if(file_exists('../model/' . $class_name . '.php')) {
-        include '../model/' . $class_name . '.php';
+    if(file_exists('../Models/' . $class_name . '.php')) {
+        include '../Models/' . $class_name . '.php';
     }
-    else{
-        include '../class/' . $class_name . '.php';
+    elseif(file_exists('../Classes/' . $class_name . '.php')) {
+        include '../Classes/' . $class_name . '.php';
+    }
+    else {
+        dd('Class '.$class_name.' not found');
     }
 });
 
@@ -16,7 +19,7 @@ Http::boot();
 
 if(isset($_GET['page'])) {
     $page = $_GET['page'];
-    if(!file_exists("../pages/$page.php")){
+    if(!file_exists("../Pages/$page.php")){
         App::redirect('home');
     }
 }

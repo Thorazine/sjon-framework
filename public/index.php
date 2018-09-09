@@ -1,22 +1,22 @@
 <?php
-    include '../core/config.php';
+    include '../Core/config.php';
 ?>
 <!DOCTYPE html>
 <html>
     <head>
-        <?php include '../core/head.php'; ?>
+        <?php include '../Core/head.php'; ?>
     </head>
     <body>
 
-        <?php include '../core/header.php'; ?>
+        <?php include '../Core/header.php'; ?>
 
-        <?php include "../pages/" . $page . ".php"; ?>
+        <?php include "../Pages/" . $page . ".php"; ?>
 
         <div class='errorcontainer'>
             <?php echo App::displayErrors(); ?>
         </div>
 
-        <?php include '../core/footer.php'; ?>
+        <?php include '../Core/footer.php'; ?>
 
     </body>
 </html>

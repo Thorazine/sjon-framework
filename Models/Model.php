@@ -554,7 +554,11 @@ abstract class Model
 
     public static function findById($id)
     {
-        return self::findBy("id", $id)[0];
+        $user = self::findBy("id", $id);
+        if($user) {
+            return $user[0];
+        }
+        return App::redirect('404');
 
     }
 

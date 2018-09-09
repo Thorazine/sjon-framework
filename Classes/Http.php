@@ -27,7 +27,7 @@ Class Http
 		}
 
 		// get the dir root
-		self::$dirroot = str_replace('/class', '/',  __DIR__);
+		self::$dirroot = str_replace('/Classes', '/',  __DIR__);
 	}
 
 	/*

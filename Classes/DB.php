@@ -92,7 +92,7 @@ class DB
     }
 
 
-    public static function getBy(string $className, $field, $value, $orderBy = "", $order = 1)
+    public static function getBy($className, $field, $value, $orderBy = "", $order = 1)
     {
         $c = self::getInstance()->c;
 

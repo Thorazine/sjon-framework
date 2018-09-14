@@ -133,13 +133,13 @@ class User extends Model
             $fileParts = pathinfo($_FILES['image']['name']);
 
             if($user->image) {
-                @unlink(Http::$dirroot.'public/images/'.$user->image);
+                @unlink(Http::$dirroot.'public'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.$user->image);
             }
 
             $user->image = sha1($fileParts['filename'].microtime()).'.'.$fileParts['extension'];
 
             if(in_array($fileParts['extension'], ['jpg', 'jpeg', 'png'])) {
-                if(move_uploaded_file($_FILES['image']['tmp_name'], Http::$dirroot.'public/images/'.$user->image)) {
+                if(move_uploaded_file($_FILES['image']['tmp_name'], Http::$dirroot.'public'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.$user->image)) {
                     // the file has been moved correctly
 
                 }

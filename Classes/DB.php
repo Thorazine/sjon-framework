@@ -98,7 +98,7 @@ class DB
 
         $class = new $className;
 
-        $stmt = $c->prepare("SELECT * FROM `" . $class->table . "` WHERE `active` = 1 AND (`$field` = :$field)" . ($orderBy == "" ? "" : " ORDER BY `$orderBy` " . ($order == 1 ? "ASC" : "DESC")));
+        $stmt = $c->prepare("SELECT * FROM `" . $class->table . "` WHERE (`$field` = :$field)" . ($orderBy == "" ? "" : " ORDER BY `$orderBy` " . ($order == 1 ? "ASC" : "DESC")));
 
         $stmt->execute(array("$field" => $value));
 

@@ -90,6 +90,10 @@ class User extends Model
         if($form['password'] !== $form['repeat']) App::addError("passwords do not match");
         if(strlen($form['password']) < 8) App::addError("password is too short");
 
+        if(isset($_SESSION['errors']) && count($_SESSION['errors'])) {
+            return false;
+        }
+
         $user = new User();
         $user->email = $form['email'];
         $user->setPassword($form['password']);

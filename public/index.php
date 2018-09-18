@@ -12,7 +12,7 @@
 
         <?php include "../Pages/" . $page . ".php"; ?>
 
-        <div class='errorcontainer'>
+        <div class="errorcontainer">
             <?php echo App::displayErrors(); ?>
         </div>
 

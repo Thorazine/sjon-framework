@@ -1,5 +1,7 @@
 <?php
 
+use Intervention\Image\ImageManagerStatic as Image;
+
 class User extends Model
 {
 
@@ -144,7 +146,13 @@ class User extends Model
 
             if(in_array($fileParts['extension'], ['jpg', 'jpeg', 'png'])) {
                 if(move_uploaded_file($_FILES['image']['tmp_name'], Http::$dirroot.'public'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.$user->image)) {
-                    // the file has been moved correctly
+                    // the file has been moved correctly, now resize it
+
+                    // open and resize an image file
+                    $img = Image::make(Http::$dirroot.'public'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.$user->image)->resize(300, 200);
+
+                    // save file as jpg with maximum quality
+                    $img->save(Http::$dirroot.'public'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.$user->image, 100);
 
                 }
             }

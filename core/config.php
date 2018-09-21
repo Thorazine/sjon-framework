@@ -1,7 +1,9 @@
 <?php
 session_start();
 
-//Include models
+require __DIR__ . '/../vendor/autoload.php';
+
+// Include models
 spl_autoload_register(function ($class_name) {
     if(file_exists('../Models/' . $class_name . '.php')) {
         include '../Models/' . $class_name . '.php';

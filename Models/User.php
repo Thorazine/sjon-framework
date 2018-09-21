@@ -149,7 +149,7 @@ class User extends Model
                     // the file has been moved correctly, now resize it
 
                     // open and resize an image file
-                    $img = Image::make(Http::$dirroot.'public'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.$user->image)->resize(300, 200);
+                    $img = Image::make(Http::$dirroot.'public'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.$user->image)->fit(300, 200);
 
                     // save file as jpg with maximum quality
                     $img->save(Http::$dirroot.'public'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.$user->image, 100);

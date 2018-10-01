@@ -188,6 +188,23 @@ abstract class Model
     }
 
 
+    public static function destroy($id)
+    {
+        try {
+            $qry = 'DELETE FROM `'.self::table().'` WHERE `id` = :id';
+
+            $stmt = DB::prepare($qry);
+
+            $stmt->execute(['id' => $id]);
+
+            return true;
+        }
+        catch(Exception $e) {
+            App::addError($e->getMessage());
+        }
+    }
+
+
     public function terminate()
     {
         $table = self::table();

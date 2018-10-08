@@ -91,7 +91,7 @@ abstract class Model
 
             $doc = $prop->getDocComment();
 
-            $type = explode("\n", explode("@Type ", $doc)[1])[0];
+            $type = @explode("\n", explode("@Type ", $doc)[1])[0];
 
             if($type) {
 

@@ -11,9 +11,6 @@ spl_autoload_register(function ($class_name) {
     elseif(file_exists('../Classes/' . $class_name . '.php')) {
         include '../Classes/' . $class_name . '.php';
     }
-    else {
-        dd('Class '.$class_name.' not found');
-    }
 });
 
 Http::boot();

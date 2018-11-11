@@ -12,6 +12,7 @@ class FormField
     private $name;
     private $placeholder;
     private $value;
+    private $values;
     private $required;
 
     public function __construct($name, $type = "text", $placeholder = "", $value = "")
@@ -47,6 +48,13 @@ class FormField
     public function value($value)
     {
         $this->value = $value;
+        return $this;
+    }
+
+
+    public function values(array $values)
+    {
+        $this->values = $values;
         return $this;
     }
 
@@ -93,14 +101,17 @@ class FormField
         switch ($this->type) {
             case "select":
                 $html.= ">";
-                foreach ($this->value as $key => $val){
-                    $html .= "<option value='$key'>$val</option>";
+
+                foreach ($this->values as $key => $val) {
+                    $html .= '<option value="'.$key.'"'.(($this->value == $key) ? ' selected' : '').'>'.$val.'</option>';
                 }
                 break;
+
             case "textarea":
                 $html .= ">";
                 if ($this->value) $html .= $this->value;
                 break;
+
             default:
                 if($this->value) $html .= "value='$this->value' ";
 

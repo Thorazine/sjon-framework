@@ -1,5 +1,10 @@
+#To Do
+- Select bewaart ingevoerde waarde (Done, voorbeeld toegevoegd bij register)
+- formulier herstelt ingevoerde POST waardes
+
+
 # Introduction
-This very basic framework is meant to be useable for beginning PHP developers who have an understanding off basic OOP. Creating pages and models is an ease.
+This very basic framework is meant to be useable for beginning PHP developers who have an understanding of basic OOP. Creating pages and models is an ease.
 
 Please take note that __This is not a fully functional MVC!__
 

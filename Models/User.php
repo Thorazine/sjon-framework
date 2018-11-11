@@ -210,6 +210,16 @@ class User extends Model
             ->placeholder("Last name")
             ->required());
 
+        $form->addField((new FormField("example"))
+            ->type('select')
+            ->placeholder("Example select")
+            ->value('example2')
+            ->values([
+                'example1' => 'Example 1',
+                'example2' => 'Example 2',
+                'example3' => 'Example 3',
+            ]));
+
         return $form->getHTML();
     }
 
